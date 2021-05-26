@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href=" {{ url_for('static', filename='style/style.css') }} " />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/img/icon/volleyball.svg">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navigation">
+            <a href=" {{ url_for('home') }} " class="navigation__link">Главная</a>
+            <a href=" {{ url_for('registration') }} " class="navigation__link">Регистрация</a>
+        </nav>
+    </header>
+    
+    <main class="main">
+        {% block content %}{% endblock %}  
+    </main>     
+
+    <footer class="footer">
+
+    </footer>
+
+</body>
+
+</html>
