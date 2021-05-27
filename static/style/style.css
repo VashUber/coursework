@@ -66,12 +66,22 @@ a{
 
 .input{
     width: 200px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #000;
+}
+
+.form__label{
+    margin-top: 10px;
 }
 
 .submit-button{
     width: 100px;
+    background: unset;
+    border: none
 }
 
 .form__button{
+    align-self: flex-end;
     margin-top: 20px;
 }
