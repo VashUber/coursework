@@ -16,8 +16,12 @@
     <header class="header">
         <nav class="navigation">
             <a href=" {{ url_for('home') }} " class="navigation__link">Главная</a>
+            {% if not current_user.is_authenticated %}
             <a href=" {{ url_for('registration') }} " class="navigation__link">Регистрация</a>
+            {% endif %}
+            {% if not current_user.is_authenticated %}
             <a href=" {{ url_for('loginPage') }} " class="navigation__link">Вход</a>
+            {% endif %}
             {% if current_user.is_authenticated %}
             <a href=" {{ url_for('logout') }} " class="navigation__link">Выход</a>
             {% endif %}
