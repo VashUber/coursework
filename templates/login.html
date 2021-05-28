@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block  title %}
+Вход
+{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h2> {{ message }} </h2>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="form-wrapper">
+    <form action="" class="form" method="POST">
+        <label for="email" class="form__label">Почта: </label>
+        <input type="email" id="email" class="input form__input" required name="email">
+        <label for="password" class="form__label">Пароль: </label>
+        <input type="password" id="password" class="input form__input" required name="password">
+        <button class="form__button submit-button" type="submit" name="submit">Войти</button>
+    </form>
+</div>
+
+{% endblock %}

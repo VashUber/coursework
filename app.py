@@ -1,33 +1,66 @@
 from enum import unique
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
 app = Flask(__name__)
+
+app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-class Users(db.Model):
+login_manager = LoginManager(app)
+
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(54), unique=True)
-    password = db.Column(db.String(500), nullable=True)
+    email = db.Column(db.String(54), unique=True, nullable=False)
+    password = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Profiles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(54), nullable=True)
+    name = db.Column(db.String(54), nullable=False)
     old = db.Column(db.Integer)
     city= db.Column(db.String(90))
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(user_id)   
+
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.route('/login', methods=("POST", "GET"))
+def loginPage():
+    if request.method == "POST":
+        login = request.form['email']
+        password = request.form['password']
+
+        if login and password:
+            user = Users.query.filter_by(email = login).first()
+
+            if check_password_hash(user.password, password):
+                login_user(user)   
+
+                return redirect(url_for('home'))
+            else:
+                flash('Ошибка входа')
+    else:
+        return render_template('login.html')
+
+@app.route('/logout', methods=("GET", "POST"))
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 @app.route('/registration', methods=("POST", "GET"))
 def registration():
