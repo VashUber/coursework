@@ -47,11 +47,10 @@ def loginPage():
         if login and password:
             user = Users.query.filter_by(email = login).first()
 
-            if (user):
-                if check_password_hash(user.password, password):
-                    login_user(user)   
+            if user and check_password_hash(user.password, password):
+                login_user(user)   
 
-                    return redirect(url_for('home'))
+                return redirect(url_for('home'))
             else:
                 flash('Ошибка входа')
                 return redirect(url_for('loginPage'))
