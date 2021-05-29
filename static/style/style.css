@@ -85,3 +85,8 @@ a{
     align-self: flex-end;
     margin-top: 20px;
 }
+
+.error-login{
+    margin-top: 30px;
+    text-align: center;
+}

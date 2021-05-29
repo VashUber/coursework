@@ -24,7 +24,7 @@ class Users(db.Model, UserMixin):
 class Profiles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
-    old = db.Column(db.Integer)
+    age = db.Column(db.Integer)
     city= db.Column(db.String(90))
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -47,12 +47,15 @@ def loginPage():
         if login and password:
             user = Users.query.filter_by(email = login).first()
 
-            if check_password_hash(user.password, password):
-                login_user(user)   
+            if (user):
+                if check_password_hash(user.password, password):
+                    login_user(user)   
 
-                return redirect(url_for('home'))
+                    return redirect(url_for('home'))
             else:
                 flash('Ошибка входа')
+                return redirect(url_for('loginPage'))
+
     else:
         return render_template('login.html')
 
@@ -71,7 +74,7 @@ def registration():
             db.session.add(u)
             db.session.flush()
 
-            p = Profiles(name=request.form['name'], old=request.form['old'], city=request.form['city'], user_id=u.id)
+            p = Profiles(name=request.form['name'], age=request.form['age'], city=request.form['city'], user_id=u.id)
             db.session.add(p)
             db.session.commit()
         except:
