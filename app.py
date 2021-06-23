@@ -1,10 +1,11 @@
 from enum import unique
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 
@@ -61,7 +62,12 @@ def home():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    base = create_engine('sqlite:///base.db').raw_connection()
+    cursor = base.cursor()
+    sql = "SELECT * FROM profiles WHERE id = " + str(current_user.id)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return render_template('profile.html', data = data)
 
 @app.route('/login', methods=("POST", "GET"))
 def loginPage():

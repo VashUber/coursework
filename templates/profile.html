@@ -6,8 +6,13 @@
 
 {% block content %}
 
-<div class="">
-    
-</div>
+<section class="profile">
+    <h1>Ваш профиль</h1>
+    <div class="profile__data">
+        {% for item in data %}
+            <p class="name">{{item[1]}}</p>
+        {% endfor %}
+    </div>
+</section>
 
 {% endblock %}
