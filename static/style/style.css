@@ -76,7 +76,7 @@ a{
 }
 
 .submit-button{
-    width: 100px;
+    width: 120px;
     background: unset;
     border: none
 }
@@ -84,6 +84,7 @@ a{
 .form__button{
     align-self: flex-end;
     margin-top: 20px;
+    margin-right: 10px;
 }
 
 .error-login{

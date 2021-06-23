@@ -1,8 +1,9 @@
 from enum import unique
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 
 app = Flask(__name__)
@@ -19,15 +20,35 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(54), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
 
 class Profiles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
-    age = db.Column(db.Integer)
-    city= db.Column(db.String(90))
-
+    age = db.Column(db.Integer, nullable=False)
+    city = db.Column(db.String(90), nullable=False)
+    ticket_id = db.Column(db.Integer, unique=True, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+class Ticket(db.Model):
+    ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id"), primary_key=True)
+    date_start = db.Column(db.DateTime, default=datetime.utcnow())
+    date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
+
+class Clubs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(54), nullable=False)
+    address = db.Column(db.Text, nullable=False)
+    client_card = db.Column(db.Integer, db.ForeignKey("ticket.ticket_id"))
+
+class Trainers(db.Model):
+    id_trainer = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    schedule = db.Column(db.String(60), default = 'Пн - Сб')
+    id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -37,6 +58,10 @@ def load_user(user_id):
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 @app.route('/login', methods=("POST", "GET"))
 def loginPage():
