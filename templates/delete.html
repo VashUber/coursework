@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block  title %}
+    Удаление аккаунта
+{% endblock %}
+
+{% block content %}
+    <section class="delete">
+        <h2>Вы действительно хотите удалить Ваш аккаунт?</h2>
+        <h3>Данное действие не является обратимым</h3>
+        <form action="" class="delete-form" method="POST">
+            <input type="submit" value="Подтвердить" class='submit-input'>
+        </form>
+    </section>
+
+{% endblock %}

@@ -140,3 +140,11 @@ input[type="file"] {
     border-radius: 100%;
     object-fit: cover;
 }
+
+.profile-delete{
+    margin-top: 20px;
+}
+
+.delete{
+    padding: 20px;
+}

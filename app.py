@@ -91,6 +91,20 @@ def profile():
         
     return render_template('profile.html', data = data)
 
+@app.route('/delete', methods=["POST", "GET"])
+def delete():
+    if request.method == "POST":
+        base = create_engine('sqlite:///base.db').raw_connection()
+        cursor = base.cursor()
+        sql = "DELETE FROM profiles WHERE id = " + str(current_user.id) + ";"
+        cursor.execute(sql)
+        sql = "DELETE FROM users WHERE id = " +str(current_user.id) + ";"
+        cursor.execute(sql)
+        logout_user()
+        base.commit()
+        return redirect(url_for('home'))
+    return render_template('delete.html')
+
 @app.route('/login', methods=["POST", "GET"])
 def loginPage():
     if request.method == "POST":
