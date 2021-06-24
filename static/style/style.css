@@ -12,11 +12,11 @@ h1{
 }
 
 h2{
-    font-size: 1.75em;
+    font-size: 1.45em;
 }
 
 main{
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 105px);
 }
 
 a{
@@ -25,7 +25,8 @@ a{
 }
 
 .link-active{
-    color:rgb(80, 80, 80)
+    color:#c2c2c2;
+    text-decoration: underline;
 }
 
 .footer{
@@ -44,6 +45,10 @@ a{
 
 .navigation__link{
     margin-right: 20px;
+}
+.navigation__link:hover{
+    transition: 1s;
+    color: #d4d4d4;
 }
 
 .form-wrapper{
@@ -90,4 +95,37 @@ a{
 .error-login{
     margin-top: 30px;
     text-align: center;
+}
+
+.profile__data{
+    display: flex;
+    width: 350px;
+    justify-content: space-between;
+}
+
+.profile__form{
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 50px;
+    height: 100px;
+}
+
+.submit-input{
+    width: 200px;
+    border: none;
+    background: #e7e7e7;
+}
+
+input[type="file"] {
+    display: none;
+} 
+
+.file-upload {
+    background: #e7e7e7;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    width: 200px;
 }

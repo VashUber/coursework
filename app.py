@@ -1,4 +1,5 @@
 from enum import unique
+import os
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
@@ -30,6 +31,7 @@ class Profiles(db.Model):
     city = db.Column(db.String(90), nullable=False)
     ticket_id = db.Column(db.Integer, unique=True, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    image = db.Column(db.Text, nullable = True)
 
 class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id"), primary_key=True)
@@ -60,16 +62,32 @@ def load_user(user_id):
 def home():
     return render_template('home.html')
 
-@app.route('/profile')
+app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
+
+@app.route('/profile', methods=["POST", "GET"])
 def profile():
     base = create_engine('sqlite:///base.db').raw_connection()
     cursor = base.cursor()
     sql = "SELECT * FROM profiles WHERE id = " + str(current_user.id)
     cursor.execute(sql)
     data = cursor.fetchall()
+    if request.method == "POST":
+        
+        if request.files:
+            image = request.files['image']
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+
+            path = './static/img/upload_profile/' + str(image.filename)
+            sql = "UPDATE profiles SET image = ('" + path + "') WHERE id = " + str(current_user.id)
+            cursor.execute(sql)
+            base.commit()
+
+            return redirect(request.url)
+   
+        
     return render_template('profile.html', data = data)
 
-@app.route('/login', methods=("POST", "GET"))
+@app.route('/login', methods=["POST", "GET"])
 def loginPage():
     if request.method == "POST":
         login = request.form['email']

@@ -7,11 +7,21 @@
 {% block content %}
 
 <section class="profile">
-    <h1>Ваш профиль</h1>
+    <h1 class="title">Ваш профиль</h1>
     <div class="profile__data">
         {% for item in data %}
-            <p class="name">{{item[1]}}</p>
+            <img src="{{item[6]}}" alt="profile image" class="profile__image">
+            <p class="profile__name">{{item[1]}}</p>
         {% endfor %}
+    </div>
+    <div class="profile__update-image">
+        <form action="" class="profile__form" method="POST" enctype='multipart/form-data'>
+            <label class="file-upload">
+                <input type="file" name='image'/>
+                <span>Выберете фото</span>
+            </label>
+            <input type="submit" value="Загрузить фото" class='submit-input'>
+        </form>
     </div>
 </section>
 
