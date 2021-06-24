@@ -15,6 +15,13 @@
         {% endfor %}
     </div>
     <div class="profile__update-image">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h2> {{ message }} </h2>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="" class="profile__form" method="POST" enctype='multipart/form-data'>
             <label class="file-upload">
                 <input type="file" name='image'/>

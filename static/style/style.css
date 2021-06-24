@@ -97,14 +97,18 @@ a{
     text-align: center;
 }
 
+.profile{
+    padding: 20px;
+}
+
 .profile__data{
+    margin-top: 20px;
     display: flex;
-    width: 350px;
+    width: 300px;
     justify-content: space-between;
 }
 
 .profile__form{
-    margin-left: 20px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -128,4 +132,11 @@ input[type="file"] {
     display: inline-block;
     cursor: pointer;
     width: 200px;
+}
+
+.profile__image{
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+    object-fit: cover;
 }

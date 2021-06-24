@@ -31,7 +31,7 @@ class Profiles(db.Model):
     city = db.Column(db.String(90), nullable=False)
     ticket_id = db.Column(db.Integer, unique=True, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    image = db.Column(db.Text, nullable = True)
+    image = db.Column(db.Text, nullable = True, default='./static/img/upload_profile/default.jpg')
 
 class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id"), primary_key=True)
@@ -75,6 +75,10 @@ def profile():
         
         if request.files:
             image = request.files['image']
+            if (not image):
+                flash('Изображение не было прикреплено!')
+                return redirect(request.url)
+
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
             path = './static/img/upload_profile/' + str(image.filename)
