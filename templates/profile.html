@@ -11,7 +11,11 @@
     <div class="profile__data">
         {% for item in data %}
             <img src="{{item[6]}}" alt="profile image" class="profile__image">
-            <p class="profile__name">{{item[1]}}</p>
+            <form action="" method="POST" class="profile__form-data">
+                <input type='text' class="profile__item" value="{{item[1]}}" name='fullname'>
+                <input type="text" class="profile__item" value="{{item[3]}}" name='city'>
+                <input type="submit" value="Изменить" class='submit-input'>
+            </form>
         {% endfor %}
     </div>
     <div class="profile__update-image">

@@ -86,6 +86,15 @@ def profile():
             cursor.execute(sql)
             base.commit()
 
+            return redirect(request.url) 
+        
+        if request.form:
+            name = request.form['fullname']
+            city = request.form['city']
+            sql = "UPDATE profiles SET name = '" + name + "', city = '" + city + "' WHERE id = " + str(current_user.id) + ";"
+            cursor.execute(sql)
+            base.commit()
+
             return redirect(request.url)
    
         
