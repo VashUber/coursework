@@ -2,7 +2,7 @@ from enum import unique
 import os
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, update
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -29,13 +29,13 @@ class Profiles(db.Model):
     name = db.Column(db.String(54), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     city = db.Column(db.String(90), nullable=False)
-    ticket_id = db.Column(db.Integer, unique=True, nullable=True)
+    ticket_id = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     image = db.Column(db.Text, nullable = True, default='./static/img/upload_profile/default.jpg')
 
 class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id"), primary_key=True)
-    date_start = db.Column(db.DateTime, default=datetime.utcnow())
+    date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
 
 class Clubs(db.Model):
@@ -68,11 +68,12 @@ app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 def profile():
     base = create_engine('sqlite:///base.db').raw_connection()
     cursor = base.cursor()
-    sql = "SELECT * FROM profiles WHERE id = " + str(current_user.id)
+    sql = "SELECT * FROM profiles LEFT JOIN ticket on profiles.ticket_id = ticket.ticket_id WHERE id = " + str(current_user.id)
     cursor.execute(sql)
     data = cursor.fetchall()
     if request.method == "POST":
-        
+        form_id = request.args.get('form_id', 1, type=int) 
+
         if request.files:
             image = request.files['image']
             if (not image):
@@ -88,7 +89,7 @@ def profile():
 
             return redirect(request.url) 
         
-        if request.form:
+        if request.form and form_id == 1:
             name = request.form['fullname']
             city = request.form['city']
             sql = "UPDATE profiles SET name = '" + name + "', city = '" + city + "' WHERE id = " + str(current_user.id) + ";"
@@ -96,6 +97,15 @@ def profile():
             base.commit()
 
             return redirect(request.url)
+
+        if request.form and form_id == 2:
+            profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: current_user.id})
+            
+            ticket = Ticket(ticket_id = current_user.id)
+            db.session.add(ticket)
+            db.session.commit()
+            return redirect(request.url)
+
    
         
     return render_template('profile.html', data = data)
@@ -126,7 +136,7 @@ def loginPage():
             if user and check_password_hash(user.password, password):
                 login_user(user)   
 
-                return redirect(url_for('home'))
+                return redirect(url_for('profile'))
             else:
                 flash('Ошибка входа')
                 return redirect(url_for('loginPage'))
