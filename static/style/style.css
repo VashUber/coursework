@@ -98,9 +98,10 @@ a{
 }
 
 .profile{
-    padding: 20px;
+    padding: 50px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .profile__data{

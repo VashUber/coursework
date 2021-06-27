@@ -2,10 +2,13 @@ from enum import unique
 import os
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, update
+from sqlalchemy import create_engine, event
+from sqlalchemy.engine import  Engine
+from sqlite3 import Connection as SQLite3Connection
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from sqlalchemy.orm import backref
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
@@ -18,23 +21,32 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
 
+@event.listens_for(Engine, "connect")
+def _set_sqlite_pragma(dbapi_connection, connection_record):
+    if isinstance(dbapi_connection, SQLite3Connection):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON;")
+        cursor.close()
+
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(54), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow())
+    child = db.relationship('Profiles', backref="parent", passive_deletes=True)
 
 class Profiles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     city = db.Column(db.String(90), nullable=False)
-    ticket_id = db.Column(db.Integer, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    ticket_id = db.Column(db.Integer, nullable=True, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'), nullable=False, unique=True)
     image = db.Column(db.Text, nullable = True, default='./static/img/upload_profile/default.jpg')
+    child = db.relationship('Ticket', backref="parent", passive_deletes=True)
 
 class Ticket(db.Model):
-    ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id"), primary_key=True)
+    ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id", ondelete='CASCADE'), primary_key=True)
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
 
@@ -113,14 +125,9 @@ def profile():
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
     if request.method == "POST":
-        base = create_engine('sqlite:///base.db').raw_connection()
-        cursor = base.cursor()
-        sql = "DELETE FROM profiles WHERE id = " + str(current_user.id) + ";"
-        cursor.execute(sql)
-        sql = "DELETE FROM users WHERE id = " +str(current_user.id) + ";"
-        cursor.execute(sql)
+        Users.query.filter_by(id = current_user.id).delete()
         logout_user()
-        base.commit()
+        db.session.commit()
         return redirect(url_for('home'))
     return render_template('delete.html')
 
