@@ -87,7 +87,7 @@ def profile():
     end = Ticket.query.filter_by(ticket_id = current_user.id).first()
     if (end):
         end = end.date_end
-        if (end.strftime("%Y%m%d") == datetime.utcnow().strftime("%Y%m%d")):
+        if (end.strftime("%Y%m%d") <= datetime.utcnow().strftime("%Y%m%d")):
             Ticket.query.filter_by(ticket_id = current_user.id).delete()
             Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: None})
             db.session.commit()
