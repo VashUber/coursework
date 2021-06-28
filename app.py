@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import  Engine
 from sqlite3 import Connection as SQLite3Connection
 from datetime import datetime, timedelta
+from sqlalchemy.sql.elements import Null
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import backref
@@ -83,6 +84,15 @@ def profile():
     sql = "SELECT * FROM profiles LEFT JOIN ticket on profiles.ticket_id = ticket.ticket_id WHERE id = " + str(current_user.id)
     cursor.execute(sql)
     data = cursor.fetchall()
+    end = Ticket.query.filter_by(ticket_id = current_user.id).first()
+    if (end):
+        end = end.date_end
+        if (end.strftime("%Y%m%d") == datetime.utcnow().strftime("%Y%m%d")):
+            Ticket.query.filter_by(ticket_id = current_user.id).delete()
+            Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: None})
+            db.session.commit()
+            return redirect(request.url)
+
     if request.method == "POST":
         form_id = request.args.get('form_id', 1, type=int) 
 
