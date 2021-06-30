@@ -72,13 +72,6 @@ a{
     padding: 20px;
 }
 
-.input{
-    width: 200px;
-    border: none;
-    outline: none;
-    border-bottom: 2px solid #000;
-}
-
 .form__label{
     margin-top: 10px;
 }
@@ -110,6 +103,7 @@ a{
 .profile__data{
     margin-top: 20px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .profile__form{
@@ -143,6 +137,7 @@ input[type="file"] {
     height: 160px;
     border-radius: 100%;
     object-fit: cover;
+    margin-right: 30px;
 }
 
 .profile-delete{
@@ -160,12 +155,12 @@ input[type="file"] {
     border-bottom: 2px solid #000;
     display: inline-block;
     padding: 10px 0 0 5px;
+    width: 200px;
 }
 
 .profile__form-data{
     display: flex;
     flex-direction: column;
-    padding-left: 30px;
 }
 
 .header__burger-menu{
@@ -182,11 +177,11 @@ input[type="file"] {
     background: #fff;
     width: 100%;
     height: 3px;
-    transition: transform 1s;
+    transition: transform .35s;
     transform-origin: bottom left;
 }
 .header__burger-menu::before{
-    transition: 1s;
+    transition: .35s;
     content: '';
     background: #fff;
     width: 100%;
@@ -233,6 +228,12 @@ input[type="file"] {
     }
     .burger--active .header__burger-menu-item{
         transform: rotate(-20deg);
+    }
+    .profile{
+        padding: 50px 10px;
+    }
+    .profile__image{
+        margin: auto;
     }
     
 }
