@@ -50,12 +50,12 @@ class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id", ondelete='CASCADE'), primary_key=True)
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
+    #club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
 
 class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
     address = db.Column(db.Text, nullable=False)
-    client_card = db.Column(db.Integer, db.ForeignKey("ticket.ticket_id"))
 
 class Trainers(db.Model):
     id_trainer = db.Column(db.Integer, primary_key=True)
@@ -63,6 +63,11 @@ class Trainers(db.Model):
     schedule = db.Column(db.String(60), default = 'Пн - Сб')
     id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
 
+#class Equipment(db.Model):
+#   id = db.Column(db.Integer, primary_key=True)
+#   club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
+#   image = db.Column(db.Text, nullable = True)
+#   name  = db.Column(db.String(90), nullable = True)
 
 
 

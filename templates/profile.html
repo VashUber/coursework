@@ -13,8 +13,8 @@
             {% for item in data %}
                 <img src="{{item[6]}}" alt="profile image" class="profile__image">
                 <form action="{{ url_for('profile', form_id = 1) }}" method="POST" class="profile__form-data">
-                    <input type='text' class="profile__item" value="{{item[1]}}" name='fullname'>
-                    <input type="text" class="profile__item" value="{{item[3]}}" name='city'>
+                    <label for="fullname"><input type='text' class="profile__item" value="{{item[1]}}" name='fullname'></label>
+                    <label for="city"><input type="text" class="profile__item" value="{{item[3]}}" name='city'></label>
                     <input type="submit" value="Изменить" class='submit-input' name="edit">
                 </form>
             {% endfor %}
@@ -28,7 +28,7 @@
                 {% endif %}
             {% endwith %}
             <form action="" class="profile__form" method="POST" enctype='multipart/form-data'>
-                <label class="file-upload">
+                <label class="profile__upload-label">
                     <input type="file" name='image'/>
                     <span>Выберете фото</span>
                 </label>
