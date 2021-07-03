@@ -50,12 +50,12 @@ class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id", ondelete='CASCADE'), primary_key=True)
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
+    club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
 
 class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
     address = db.Column(db.Text, nullable=False)
-    client_card = db.Column(db.Integer, db.ForeignKey("ticket.ticket_id"))
 
 class Trainers(db.Model):
     id_trainer = db.Column(db.Integer, primary_key=True)
@@ -63,6 +63,11 @@ class Trainers(db.Model):
     schedule = db.Column(db.String(60), default = 'Пн - Сб')
     id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
 
+#class Equipment(db.Model):
+#   id = db.Column(db.Integer, primary_key=True)
+#   club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
+#   image = db.Column(db.Text, nullable = True)
+#   name  = db.Column(db.String(90), nullable = True)
 
 
 
@@ -84,10 +89,11 @@ def profile():
     sql = "SELECT * FROM profiles LEFT JOIN ticket on profiles.ticket_id = ticket.ticket_id WHERE id = " + str(current_user.id)
     cursor.execute(sql)
     data = cursor.fetchall()
+    clubs = Clubs.query.all()
     end = Ticket.query.filter_by(ticket_id = current_user.id).first()
     if (end):
         end = end.date_end
-        if (end.strftime("%Y%m%d") == datetime.utcnow().strftime("%Y%m%d")):
+        if (end.strftime("%Y%m%d") <= datetime.utcnow().strftime("%Y%m%d")):
             Ticket.query.filter_by(ticket_id = current_user.id).delete()
             Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: None})
             db.session.commit()
@@ -122,15 +128,15 @@ def profile():
 
         if request.form and form_id == 2:
             profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: current_user.id})
-            
-            ticket = Ticket(ticket_id = current_user.id)
+            club = request.form['club-name']
+            ticket = Ticket(ticket_id = current_user.id, club_id = club)
             db.session.add(ticket)
             db.session.commit()
             return redirect(request.url)
 
    
         
-    return render_template('profile.html', data = data)
+    return render_template('profile.html', data = data, clubs=clubs)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
