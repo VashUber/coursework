@@ -50,7 +50,7 @@ class Ticket(db.Model):
     ticket_id = db.Column(db.Integer, db.ForeignKey("profiles.ticket_id", ondelete='CASCADE'), primary_key=True)
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
-    #club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
+    club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
 
 class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -89,6 +89,7 @@ def profile():
     sql = "SELECT * FROM profiles LEFT JOIN ticket on profiles.ticket_id = ticket.ticket_id WHERE id = " + str(current_user.id)
     cursor.execute(sql)
     data = cursor.fetchall()
+    clubs = Clubs.query.all()
     end = Ticket.query.filter_by(ticket_id = current_user.id).first()
     if (end):
         end = end.date_end
@@ -127,15 +128,15 @@ def profile():
 
         if request.form and form_id == 2:
             profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: current_user.id})
-            
-            ticket = Ticket(ticket_id = current_user.id)
+            club = request.form['club-name']
+            ticket = Ticket(ticket_id = current_user.id, club_id = club)
             db.session.add(ticket)
             db.session.commit()
             return redirect(request.url)
 
    
         
-    return render_template('profile.html', data = data)
+    return render_template('profile.html', data = data, clubs=clubs)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
