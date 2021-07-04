@@ -56,6 +56,7 @@ class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(54), nullable=False)
     address = db.Column(db.Text, nullable=False)
+    image = db.Column(db.Text, nullable=False)
 
 class Trainers(db.Model):
     id_trainer = db.Column(db.Integer, primary_key=True)
@@ -188,6 +189,11 @@ def registration():
         except:
             db.session.rollback()
     return render_template('reg.html', title="Регистрация")
+
+@app.route('/clubs')
+def clubs():
+    clubs = Clubs.query.all()
+    return render_template('clubs.html', clubs = clubs)
 
 if __name__ == '__main__':
     app.run(debug=True)

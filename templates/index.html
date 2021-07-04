@@ -21,36 +21,42 @@
             
             <a href=" {{ url_for('home') }} " class="navigation__link 
             {% if request.url_rule|string == '/home' %}
-                link-active
+                link--active
             {% endif %}">Главная</a>
+
+            <a href=" {{ url_for('clubs') }} " class="navigation__link 
+            {% if request.url_rule|string == '/clubs' %}
+                link--active
+            {% endif %}">Клубы</a>
 
             {% if current_user.is_authenticated %}
                 <a href=" {{ url_for('profile') }} " class="navigation__link
                 {% if request.url_rule|string == '/profile' %}
-                    link-active
+                    link--active
                 {% endif %}">Профиль</a>
             {% endif %}
 
             {% if not current_user.is_authenticated %}
                 <a href=" {{ url_for('registration') }} " class="navigation__link
                 {% if request.url_rule|string == '/registration' %}
-                    link-active
+                    link--active
                 {% endif %}">Регистрация</a>
             {% endif %}
 
             {% if not current_user.is_authenticated %}
                 <a href=" {{ url_for('loginPage') }} " class="navigation__link
                 {% if request.url_rule|string == '/login' %}
-                    link-active
+                    link--active
                 {% endif %}">Вход</a>
             {% endif %}
 
             {% if current_user.is_authenticated %}
                 <a href=" {{ url_for('logout') }} " class="navigation__link
                 {% if request.url_rule|string == '/logout' %}
-                    link-active
-                {% endif %}"">Выход</a>
+                    link--active
+                {% endif %}">Выход</a>
             {% endif %}
+
 
         </nav>
     </header>

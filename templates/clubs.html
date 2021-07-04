@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block  title %}
+    Клубы
+{% endblock %}
+
+{% block content %}
+    <section class="clubs">
+        <h2 class="clubs__title">Клубы</h2>
+
+        <div class="clubs__wrapper">
+            {% for club in clubs %}
+                <div class="clubs__item">
+                    <h3 class="clubs__subtitle">{{club.name}}</h3>
+                    <img src="{{club.image}}" alt="{{club.name}}" class="clubs__image">
+                    <p class="clubs__address"> {{club.address}} </p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </section>
+{% endblock %}

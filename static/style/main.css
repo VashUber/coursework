@@ -28,7 +28,7 @@ input[type=file] {
   display: none;
 }
 
-.link-active {
+.link--active {
   color: #c2c2c2;
   text-decoration: underline;
 }
@@ -192,6 +192,35 @@ input[type=file] {
   padding: 20px 0 20px 0;
 }
 
+.clubs__wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+.clubs__item {
+  padding: 5px;
+  box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 25px;
+  padding: 5px;
+  margin: 10px;
+  width: 300px;
+  height: 360px;
+}
+.clubs__subtitle {
+  margin: 10px 0 20px 10px;
+}
+.clubs__image {
+  display: block;
+  width: 270px;
+  margin: auto;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.clubs__address {
+  word-wrap: break-word;
+}
+
 @media (max-width: 767.99px) {
   .header__burger-menu {
     display: unset;
@@ -242,5 +271,9 @@ input[type=file] {
 
   .profile__image {
     margin: auto;
+  }
+
+  .clubs__wrapper {
+    justify-content: center;
   }
 }/*# sourceMappingURL=main.css.map */
