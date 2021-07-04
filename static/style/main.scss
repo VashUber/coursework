@@ -28,7 +28,7 @@ input[type="file"] {
     display: none;
 } 
 
-.link-active{
+.link--active{
     color:#c2c2c2;
     text-decoration: underline;
 }
@@ -199,6 +199,38 @@ input[type="file"] {
     
 }
 
+.clubs{
+    &__wrapper{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-content: space-between;
+    }
+    &__item{
+        padding: 5px;
+        box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
+        border-radius: 25px;
+        padding: 5px;
+        margin: 10px;
+        width: 300px;
+        height: 360px;
+    }
+    &__subtitle{
+        margin: 10px 0 20px 10px;
+    }
+    &__image{
+        display: block;
+        width: 270px;
+        margin: auto;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    &__address{
+        word-wrap: break-word;
+    }
+
+}
+
 @media (max-width: 767.99px) {
     .header__burger-menu{
         display: unset;
@@ -242,6 +274,10 @@ input[type="file"] {
     }
     .profile__image{
         margin: auto;
+    }
+
+    .clubs__wrapper{
+        justify-content: center;
     }
     
 }

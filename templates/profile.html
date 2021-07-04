@@ -13,8 +13,8 @@
         <div class="profile__data">
                 <img src="{{item[6]}}" alt="profile image" class="profile__image">
                 <form action="{{ url_for('profile', form_id = 1) }}" method="POST" class="profile__form-data">
-                    <label for="fullname"><input type='text' class="profile__item" value="{{item[1]}}" name='fullname'></label>
-                    <label for="city"><input type="text" class="profile__item" value="{{item[3]}}" name='city'></label>
+                    <label><input type='text' class="profile__item" value="{{item[1]}}" name='fullname'></label>
+                    <label><input type="text" class="profile__item" value="{{item[3]}}" name='city'></label>
                     <input type="submit" value="Изменить" class='submit-input' name="edit">
                 </form>
         </div>
@@ -26,7 +26,7 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <form action="" class="profile__form" method="POST" enctype='multipart/form-data'>
+            <form action="{{ url_for('profile') }}" class="profile__form" method="POST" enctype='multipart/form-data'>
                 <label class="profile__upload-label">
                     <input type="file" name='image'/>
                     <span>Выберете фото</span>
@@ -44,8 +44,8 @@
         {% if not item[4] == current_user.id %}
         <h3>В данный момент у Вас нет абонемента</h3>
         <form action=" {{ url_for('profile', form_id = 2) }} " method="POST" class="profile__form">
-            <label for="">Выберите клуб</label>
-                <select name="club-name" id="" class="select">
+            <label for="club">Выберите клуб</label>
+                <select name="club-name" id="club" class="select">
                     {% for option in clubs %}
                         <option value=" {{ option.id }} "> {{ option.name }} // {{ option.address }}</option>
                     {% endfor %}
