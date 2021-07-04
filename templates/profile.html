@@ -36,7 +36,7 @@
         </div>
         <div class="profile-delete">
             <h3>Хотите удлаить аккаунт?</h3>
-            <a href=" {{url_for('delete')}} " class="delete-link">Перейти на страницу удаления аккаунта</a>
+            <a href=" {{url_for('delete')}} " class="link">Перейти на страницу удаления аккаунта</a>
         </div>
     </div> 
     <div class="profile__right">
@@ -54,7 +54,8 @@
         </form>
         {% else %}
         <div class="profile__exist-ticket">
-            <p>Ваш текущий абонемент действует до: {{ item[9][:10] }}</p>
+            <p class="text">Ваш текущий абонемент действителен до: <span class="text--decoration-underline">{{ item[9][:10] }}</span></p>
+            <a href="{{url_for('ticket')}}" class="link">Перейти на страницу просмотра абонемента</a>
         </div>
         {% endif %}
 

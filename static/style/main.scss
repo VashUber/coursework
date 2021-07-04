@@ -71,6 +71,10 @@ input[type="file"] {
     padding: 20px;
 }
 
+.link:hover{
+    text-decoration: underline;
+}
+
 .header{
     background-color: #000;
     height: 55px;
@@ -199,6 +203,25 @@ input[type="file"] {
     
 }
 
+.text--decoration-underline{
+    text-decoration: underline;
+}
+
+.ticket{
+    &__wrapper{
+        display: flex;
+        justify-content: center;
+    }
+    &__item{
+        width: 430px;
+        height: 260px;
+        background: #000;
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+    }
+}
+
 .clubs{
     &__wrapper{
         display: flex;
@@ -247,13 +270,12 @@ input[type="file"] {
         display: none;
         flex-direction: column;
         justify-content: space-around;
-        padding: 40px 0 40px 0;
         &__link{
             padding-right: unset;
         }
         &--active{
             position: fixed;
-            height: 100vh;
+            height: 100%;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.85);
             display: flex;

@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import  Engine
 from sqlite3 import Connection as SQLite3Connection
 from datetime import datetime, timedelta
+from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.elements import Null
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -135,9 +136,16 @@ def profile():
             db.session.commit()
             return redirect(request.url)
 
-   
-        
     return render_template('profile.html', data = data, clubs=clubs)
+
+@app.route('/ticket')
+def ticket():
+    ticket = db.session.query(Profiles, Ticket, Clubs
+    ).filter(Profiles.id == current_user.id
+    ).filter(Profiles.ticket_id == Ticket.ticket_id
+    ).filter(Ticket.club_id == Clubs.id).all()
+    print(ticket)
+    return render_template('ticket.html', ticket=ticket)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():

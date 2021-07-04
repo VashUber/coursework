@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block  title %}
+    Профиль
+{% endblock %}
+
+{% block content %}
+    <section class="ticket">
+        <div class="ticket__wrapper">
+            {% for item in ticket %}
+                <div class="ticket__item">
+                    <p>Имя: {{ item[0].name}} </p>
+                    <p>Действителен до: {{(item[1].date_end | string)[:10]}}</p>
+                    <p>Клуб: {{item[2].name}} </p>
+                    <p>Адрес: {{item[2].address}}  </p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
