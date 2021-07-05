@@ -6,6 +6,11 @@
     line-height: 1.35em;
 }
 
+img{
+    pointer-events: none;
+    display: block;
+}
+
 h1{
     font-size: 2em;
 }
@@ -15,8 +20,8 @@ h2{
 }
 
 main{
-    padding: 50px;
-    min-height: calc(100vh - 215px);
+    padding: 60px 50px;
+    min-height: calc(100vh - 180px);
 }
 
 a{
@@ -75,8 +80,16 @@ input[type="file"] {
     text-decoration: underline;
 }
 
+.title + div{
+    margin-top: 20px;
+}
+
 .header{
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.65);
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.1);
     height: 55px;
     color: #fff;
     &__burger-menu-item{
@@ -155,7 +168,6 @@ input[type="file"] {
     justify-content: space-between;
     flex-wrap: wrap;
     &__data{
-        padding-top: 20px;
         display: flex;
         flex-wrap: wrap;
     }
@@ -180,6 +192,7 @@ input[type="file"] {
         border-radius: 100%;
         object-fit: cover;
         margin-right: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.15);
     }
 
     &__item{
@@ -190,6 +203,7 @@ input[type="file"] {
         display: inline-block;
         padding: 10px 0 0 5px;
         width: 200px;
+        background: unset;
     }
 
     &__form-data{
@@ -211,6 +225,10 @@ input[type="file"] {
     &__wrapper{
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        min-height: calc(100vh - 210px);
     }
     &__item{
         width: 430px;
@@ -219,6 +237,11 @@ input[type="file"] {
         color: #fff;
         padding: 20px;
         border-radius: 10px;
+    }
+    &__print{
+        margin-top: 20px;
+        width: 150px;
+        border: none;
     }
 }
 
@@ -230,19 +253,22 @@ input[type="file"] {
         align-content: space-between;
     }
     &__item{
+        position: relative;
         padding: 5px;
         box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
-        border-radius: 25px;
         padding: 5px;
         margin: 10px;
         width: 300px;
         height: 360px;
+        background-color: #fff;
+        border: 2px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(to left, #da1212, #ffbb00);
     }
     &__subtitle{
         margin: 10px 0 20px 10px;
     }
     &__image{
-        display: block;
         width: 270px;
         margin: auto;
         border-radius: 5px;
@@ -259,12 +285,8 @@ input[type="file"] {
         display: unset;
         z-index: 2;
     }
-    .header{
-        position: fixed;
-        width: 100%;
-    }
     main{
-        min-height: calc(100vh - 60px);
+        min-height: calc(100vh - 60px);  
     }
     .navigation{
         display: none;
@@ -285,14 +307,14 @@ input[type="file"] {
         overflow: hidden;
     }
     .burger--active.header__burger-menu::before{
-        transform: rotate(20deg);
+        transform: rotate(17deg);
         
     }
     .burger--active .header__burger-menu-item{
-        transform: rotate(-20deg);
+        transform: rotate(-17deg);
     }
     .main{
-        padding: 50px 10px;
+        padding: 60px 10px;
     }
     .profile__image{
         margin: auto;
