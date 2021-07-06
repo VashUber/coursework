@@ -20,8 +20,8 @@ h2 {
 }
 
 main {
-  padding: 60px 50px;
-  min-height: calc(100vh - 180px);
+  padding: 80px 50px;
+  min-height: calc(100vh - 220px);
 }
 
 a {
@@ -85,13 +85,14 @@ input[type=file] {
 }
 
 .header {
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: #000;
   position: fixed;
   width: 100%;
   z-index: 2;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.1);
   height: 55px;
   color: #fff;
+  transition: 0.45s;
 }
 .header__burger-menu-item {
   display: inline-block;
@@ -118,6 +119,15 @@ input[type=file] {
   left: 0;
   display: none;
   margin: 20px;
+}
+.header__skip-link {
+  position: absolute;
+}
+.header__skip-link:not(:focus) {
+  overflow: hidden;
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
+  margin: -1px;
 }
 
 .form-wrapper {
@@ -187,7 +197,7 @@ input[type=file] {
   border-radius: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  margin-right: 30px;
+  margin: 0 30px 20px 0;
   border: 2px solid rgba(255, 255, 255, 0.15);
 }
 .profile__item {
@@ -245,15 +255,27 @@ input[type=file] {
 .clubs__item {
   position: relative;
   padding: 5px;
-  box-shadow: 0px 6px 8px 0px rgba(34, 60, 80, 0.2);
   padding: 5px;
   margin: 10px;
   width: 300px;
   height: 360px;
-  background-color: #fff;
-  border: 2px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to left, #da1212, #ffbb00);
+  position: relative;
+  background: #fff;
+  background-clip: padding-box;
+  border: solid 5px transparent;
+  border-radius: 1em;
+}
+.clubs__item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -5px;
+  border-radius: inherit;
+  background: linear-gradient(to right, red, orange);
 }
 .clubs__subtitle {
   margin: 10px 0 20px 10px;
@@ -274,8 +296,9 @@ input[type=file] {
     z-index: 2;
   }
 
-  main {
+  .main {
     min-height: calc(100vh - 60px);
+    padding: 60px 10px;
   }
 
   .navigation {
@@ -304,10 +327,6 @@ input[type=file] {
 
   .burger--active .header__burger-menu-item {
     transform: rotate(-17deg);
-  }
-
-  .main {
-    padding: 60px 10px;
   }
 
   .profile__image {

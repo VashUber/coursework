@@ -6,8 +6,6 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import  Engine
 from sqlite3 import Connection as SQLite3Connection
 from datetime import datetime, timedelta
-from sqlalchemy.orm.session import Session
-from sqlalchemy.sql.elements import Null
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import backref

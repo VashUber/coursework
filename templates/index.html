@@ -17,6 +17,7 @@
 
 <body>
     <header class="header">
+        <a href="#main" class="header__skip-link" tabindex="0">Перейти к контенту</a>
         <div class="header__burger-menu">
             <span class="header__burger-menu-item"></span>
         </div>
@@ -64,7 +65,7 @@
         </nav>
     </header>
     
-    <main class="main">
+    <main class="main" id="main" >
         {% block content %}{% endblock %}  
     </main>     
 
