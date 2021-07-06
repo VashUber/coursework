@@ -62,6 +62,7 @@ class Trainers(db.Model):
     name = db.Column(db.String(50))
     schedule = db.Column(db.String(60), default = 'Пн - Сб')
     id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
+    image = db.Column(db.Text, nullable = True)
 
 #class Equipment(db.Model):
 #   id = db.Column(db.Integer, primary_key=True)
@@ -144,6 +145,13 @@ def ticket():
     ).filter(Ticket.club_id == Clubs.id).all()
     print(ticket)
     return render_template('ticket.html', ticket=ticket)
+
+@app.route('/trainers')
+def trainers():
+    trainers = db.session.query(Clubs, Trainers
+    ).filter(Trainers.id_club == Clubs.id).all()
+    print(trainers)
+    return render_template('trainers.html', trainers=trainers)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():

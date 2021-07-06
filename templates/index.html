@@ -33,6 +33,12 @@
                 link--active
             {% endif %}">Клубы</a>
 
+            <a href=" {{ url_for('trainers') }} " class="navigation__link 
+            {% if request.url_rule|string == '/trainers' %}
+                link--active
+            {% endif %}">Тренеры</a>
+
+
             {% if current_user.is_authenticated %}
                 <a href=" {{ url_for('profile') }} " class="navigation__link
                 {% if request.url_rule|string == '/profile' %}

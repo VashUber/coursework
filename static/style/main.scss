@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.05em;
+    font-size: 1.06em;
     line-height: 1.35em;
 }
 
@@ -16,13 +16,18 @@ h1{
 }
 
 h2{
-    font-size: 1.45em;
+    font-size: 1.75em;
+}
+
+h3{
+    font-size: 1.35em;
 }
 
 main{
     padding: 80px 50px;
     min-height: calc(100vh - 220px);
 }
+
 
 a{
     color: unset;
@@ -84,8 +89,13 @@ input[type="file"] {
     margin-top: 20px;
 }
 
+.subtitle{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
 .header{
-    background-color: #000;
+    background: rgba(0, 0, 0, 0.925);
     position: fixed;
     width: 100%;
     z-index: 2;
@@ -197,8 +207,8 @@ input[type="file"] {
     }
     
     &__image{
-        width: 160px;
-        height: 160px;
+        width: 185px;
+        height: 185px;
         border-radius: 100%;
         object-fit: cover;
         margin: 0 30px 20px 0;
@@ -219,6 +229,7 @@ input[type="file"] {
     &__form-data{
         display: flex;
         flex-direction: column;
+        padding-bottom: 20px;
     }
 
     &-delete{
@@ -237,8 +248,7 @@ input[type="file"] {
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        padding-top: 30px;
-        min-height: calc(100vh - 210px);
+        min-height: calc(100vh - 220px);
     }
     &__item{
         width: 430px;
@@ -265,7 +275,6 @@ input[type="file"] {
     &__item{
         position: relative;
         padding: 5px;
-        padding: 5px;
         margin: 10px;
         width: 300px;
         height: 360px;
@@ -284,9 +293,6 @@ input[type="file"] {
             background: linear-gradient(to right, red, orange);
         }
     }
-    &__subtitle{
-        margin: 10px 0 20px 10px;
-    }
     &__image{
         width: 270px;
         margin: auto;
@@ -296,7 +302,28 @@ input[type="file"] {
     &__address{
         word-wrap: break-word;
     }
+}
 
+.trainers{
+    &__wrapper{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-content: space-between;
+    }
+    &__item{
+        border-radius: 1em;
+        box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
+        height: 490px;
+        width: 270px;
+        padding: 20px;
+        margin: 10px;
+    }
+    &__image{
+        width: 220px;
+        margin: auto;
+        padding-bottom: 10px;
+    }
 }
 
 @media (max-width: 767.99px) {
@@ -312,6 +339,7 @@ input[type="file"] {
         display: none;
         flex-direction: column;
         justify-content: space-around;
+        padding-top: 15px;
         &__link{
             padding-right: unset;
         }
@@ -327,17 +355,20 @@ input[type="file"] {
         overflow: hidden;
     }
     .burger--active.header__burger-menu::before{
-        transform: rotate(17deg);
+        transform: rotate(21deg);
         
     }
     .burger--active .header__burger-menu-item{
-        transform: rotate(-17deg);
+        transform: rotate(-21deg);
     }
     .profile__image{
         margin: auto;
     }
-
     .clubs__wrapper{
+        justify-content: center;
+    }
+
+    .trainers__wrapper{
         justify-content: center;
     }
     

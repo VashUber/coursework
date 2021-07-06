@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 1.05em;
+  font-size: 1.06em;
   line-height: 1.35em;
 }
 
@@ -16,7 +16,11 @@ h1 {
 }
 
 h2 {
-  font-size: 1.45em;
+  font-size: 1.75em;
+}
+
+h3 {
+  font-size: 1.35em;
 }
 
 main {
@@ -84,8 +88,13 @@ input[type=file] {
   margin-top: 20px;
 }
 
+.subtitle {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
 .header {
-  background-color: #000;
+  background: rgba(0, 0, 0, 0.925);
   position: fixed;
   width: 100%;
   z-index: 2;
@@ -192,8 +201,8 @@ input[type=file] {
   width: 200px;
 }
 .profile__image {
-  width: 160px;
-  height: 160px;
+  width: 185px;
+  height: 185px;
   border-radius: 100%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -215,6 +224,7 @@ input[type=file] {
 .profile__form-data {
   display: flex;
   flex-direction: column;
+  padding-bottom: 20px;
 }
 .profile-delete {
   padding: 20px 0 20px 0;
@@ -229,8 +239,7 @@ input[type=file] {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
-  min-height: calc(100vh - 210px);
+  min-height: calc(100vh - 220px);
 }
 .ticket__item {
   width: 430px;
@@ -255,7 +264,6 @@ input[type=file] {
 .clubs__item {
   position: relative;
   padding: 5px;
-  padding: 5px;
   margin: 10px;
   width: 300px;
   height: 360px;
@@ -277,9 +285,6 @@ input[type=file] {
   border-radius: inherit;
   background: linear-gradient(to right, red, orange);
 }
-.clubs__subtitle {
-  margin: 10px 0 20px 10px;
-}
 .clubs__image {
   width: 270px;
   margin: auto;
@@ -288,6 +293,26 @@ input[type=file] {
 }
 .clubs__address {
   word-wrap: break-word;
+}
+
+.trainers__wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+.trainers__item {
+  border-radius: 1em;
+  box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
+  height: 490px;
+  width: 270px;
+  padding: 20px;
+  margin: 10px;
+}
+.trainers__image {
+  width: 220px;
+  margin: auto;
+  padding-bottom: 10px;
 }
 
 @media (max-width: 767.99px) {
@@ -305,6 +330,7 @@ input[type=file] {
     display: none;
     flex-direction: column;
     justify-content: space-around;
+    padding-top: 15px;
   }
   .navigation__link {
     padding-right: unset;
@@ -322,11 +348,11 @@ input[type=file] {
   }
 
   .burger--active.header__burger-menu::before {
-    transform: rotate(17deg);
+    transform: rotate(21deg);
   }
 
   .burger--active .header__burger-menu-item {
-    transform: rotate(-17deg);
+    transform: rotate(-21deg);
   }
 
   .profile__image {
@@ -334,6 +360,10 @@ input[type=file] {
   }
 
   .clubs__wrapper {
+    justify-content: center;
+  }
+
+  .trainers__wrapper {
     justify-content: center;
   }
 }/*# sourceMappingURL=main.css.map */
