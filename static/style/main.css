@@ -44,13 +44,13 @@ a {
 }
 
 .home {
-  margin: -80px -50px;
+  margin: -45px -50px;
 }
 .home__title {
   position: absolute;
   z-index: 5;
   left: calc(50% - 124px);
-  top: 70px;
+  top: 95px;
   color: #fff;
 }
 .home__club-item {
@@ -64,6 +64,9 @@ a {
 }
 .home__subtitle {
   padding-top: 20px;
+}
+.home__count-club {
+  text-align: center;
 }
 
 a:hover {
@@ -138,7 +141,7 @@ input[type=file] {
   background: rgba(0, 0, 0, 0.925);
   position: fixed;
   width: 100%;
-  z-index: 2;
+  z-index: 7;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.1);
   height: 55px;
   color: #fff;
@@ -283,7 +286,8 @@ input[type=file] {
   min-height: calc(100vh - 220px);
 }
 .ticket__item {
-  width: 430px;
+  max-width: 430px;
+  min-width: 240px;
   height: 260px;
   background: #000;
   color: #fff;
@@ -384,6 +388,9 @@ input[type=file] {
     transform: rotate(-22deg);
   }
 
+  .profile__data {
+    padding-bottom: 20px;
+  }
   .profile__image {
     margin: auto;
   }
@@ -397,5 +404,9 @@ input[type=file] {
   }
   .home__title {
     display: none;
+  }
+
+  .ticket__wrapper {
+    min-height: calc(100vh - 60px);
   }
 }/*# sourceMappingURL=main.css.map */

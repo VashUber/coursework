@@ -45,12 +45,12 @@ a{
 }
 
 .home{
-    margin: -80px -50px;
+    margin: -45px -50px;
     &__title{
         position: absolute;
         z-index: 5;
         left: calc(50% - 124px);
-        top: 70px;
+        top: 95px;
         color: #fff;
     }
     &__club-item{
@@ -64,6 +64,9 @@ a{
     }
     &__subtitle{
         padding-top: 20px;
+    }
+    &__count-club{
+        text-align: center;
     }
 }
 
@@ -140,7 +143,7 @@ input[type="file"] {
     background: rgba(0, 0, 0, 0.925);
     position: fixed;
     width: 100%;
-    z-index: 2;
+    z-index: 7;
     box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.1);
     height: 55px;
     color: #fff;
@@ -293,7 +296,8 @@ input[type="file"] {
         min-height: calc(100vh - 220px);
     }
     &__item{
-        width: 430px;
+        max-width: 430px;
+        min-width: 240px;
         height: 260px;
         background: #000;
         color: #fff;
@@ -391,8 +395,14 @@ input[type="file"] {
     .burger--active .header__burger-menu-item{
         transform: rotate(-22deg);
     }
-    .profile__image{
-        margin: auto;
+
+    .profile{
+        &__data{
+            padding-bottom: 20px;
+        }
+        &__image{
+            margin: auto;
+        }
     }
     .wrapper{
         justify-content: center;
@@ -402,6 +412,12 @@ input[type="file"] {
         margin: -27px -10px;
         &__title{
             display: none;
+        }
+    }
+
+    .ticket{
+        &__wrapper{
+            min-height: calc(100vh - 60px); 
         }
     }
     

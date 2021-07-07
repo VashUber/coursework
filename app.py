@@ -50,6 +50,7 @@ class Ticket(db.Model):
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
     club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
+    #price = db.Column(db.Integer, nullable=False, default = 1200)
 
 class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,6 +64,7 @@ class Trainers(db.Model):
     schedule = db.Column(db.String(60), default = 'Пн - Сб')
     id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
     image = db.Column(db.Text, nullable = True)
+    #work_experience = db.Column(db.Text, nullable = False)
 
 #class Equipment(db.Model):
 #   id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +82,8 @@ def load_user(user_id):
 @app.route('/home')
 def home():
     clubs = Clubs.query.limit(4).all()
-    return render_template('home.html', clubs = clubs)
+    clubs_count = Clubs.query.count()
+    return render_template('home.html', clubs = clubs, count = clubs_count)
 
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 
@@ -88,9 +91,10 @@ app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 def profile():
     base = create_engine('sqlite:///base.db').raw_connection()
     cursor = base.cursor()
-    sql = "SELECT * FROM profiles LEFT JOIN ticket on profiles.ticket_id = ticket.ticket_id WHERE id = " + str(current_user.id)
-    cursor.execute(sql)
-    data = cursor.fetchall()
+    data = db.session.query(Profiles, Ticket, Users
+    ).filter(Profiles.id == current_user.id
+    ).filter(Profiles.ticket_id == Ticket.ticket_id
+    ).filter(Profiles.user_id == Users.id).all()
     clubs = Clubs.query.all()
     end = Ticket.query.filter_by(ticket_id = current_user.id).first()
     if (end):
@@ -122,9 +126,11 @@ def profile():
         if request.form and form_id == 1:
             name = request.form['fullname']
             city = request.form['city']
-            sql = "UPDATE profiles SET name = '" + name + "', city = '" + city + "' WHERE id = " + str(current_user.id) + ";"
-            cursor.execute(sql)
-            base.commit()
+            email = request.form['email']
+            profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.name: name, Profiles.city: city})
+            user = Users.query.filter_by(id = current_user.id).update({Users.email: email})
+            
+            db.session.commit()
 
             return redirect(request.url)
 
@@ -144,15 +150,14 @@ def ticket():
     ).filter(Profiles.id == current_user.id
     ).filter(Profiles.ticket_id == Ticket.ticket_id
     ).filter(Ticket.club_id == Clubs.id).all()
-    print(ticket)
     return render_template('ticket.html', ticket=ticket)
 
 @app.route('/trainers')
 def trainers():
     trainers = db.session.query(Clubs, Trainers
     ).filter(Trainers.id_club == Clubs.id).all()
-    print(trainers)
-    return render_template('trainers.html', trainers=trainers)
+    count = Trainers.query.count()
+    return render_template('trainers.html', trainers=trainers, count=count)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
@@ -208,7 +213,8 @@ def registration():
 @app.route('/clubs')
 def clubs():
     clubs = Clubs.query.all()
-    return render_template('clubs.html', clubs = clubs)
+    clubs_count = Clubs.query.count()
+    return render_template('clubs.html', clubs = clubs, count = clubs_count)
 
 if __name__ == '__main__':
     app.run(debug=True)

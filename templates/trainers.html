@@ -6,12 +6,13 @@
 
 {% block content %}
     <section class="trainers">
-        <h2 class="trainers__title title">Тренеры</h2>
+        <h2 class="trainers__title title">Тренеры ({{count}})</h2>
+        <h3 class="trainers__subtitle">Сумраный отыт работы наших тренеров: </h3>
         <div class="trainers__wrapper wrapper">
             {% for trainer in trainers %}
             <div class="trainers__item">
                 <h3 class="trainers__name subtitle">{{trainer[1].name}}</h3>
-                <img src="../static/img/trainers/{{trainer[1].image}} " alt="" class="trainers__image">
+                <img src="../static/img/trainers/{{trainer[1].image}} " alt="{{trainer[0].name}}" class="trainers__image">
                 <p class="trainers__club">Клуб: {{trainer[0].name}}</p>
                 <p class="trainers__schedule">Расписание: {{trainer[1].schedule}}</p>
             </div>
