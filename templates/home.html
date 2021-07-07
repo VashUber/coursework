@@ -33,5 +33,15 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        <h2 class="subtitle home__subtitle"> Наши клбуы </h2>
+        <div class="clubs__wrapper wrapper">
+            {% for club in clubs %}           
+                <div class="home__club-item">
+                    <h3 class="home__club-name subtitle">{{club.name}}</h3>
+                    <img src="../static/img/clubs/{{club.image}}" alt="{{club.name}}" class="clubs__image">
+                    <p class="home__club-ddress"> {{club.address}} </p>
+                </div>             
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}

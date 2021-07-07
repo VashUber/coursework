@@ -45,13 +45,25 @@ a{
 }
 
 .home{
-    margin: -45px -50px;
+    margin: -80px -50px;
     &__title{
         position: absolute;
         z-index: 5;
-        left: calc(50% - 138px);
+        left: calc(50% - 124px);
         top: 70px;
         color: #fff;
+    }
+    &__club-item{
+        padding: 5px;
+        margin: 10px;
+        width: 300px;
+        height: 360px;
+    }
+    &__club-ddress{
+        margin-left: 16px;
+    }
+    &__subtitle{
+        padding-top: 20px;
     }
 }
 
@@ -96,6 +108,13 @@ input[type="file"] {
 .error-login{
     margin-top: 30px;
     text-align: center;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
 }
 
 .footer{
@@ -289,19 +308,12 @@ input[type="file"] {
 }
 
 .clubs{
-    &__wrapper{
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-content: space-between;
-    }
     &__item{
         position: relative;
         padding: 5px;
         margin: 10px;
         width: 300px;
         height: 360px;
-        position: relative;
         background: #fff;
         background-clip: padding-box; 
         border: solid 5px transparent; 
@@ -328,12 +340,6 @@ input[type="file"] {
 }
 
 .trainers{
-    &__wrapper{
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-content: space-between;
-    }
     &__item{
         border-radius: 1em;
         box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
@@ -341,6 +347,7 @@ input[type="file"] {
         width: 270px;
         padding: 10px 25px 35px 25px;
         margin: 10px;
+        background: #fff;
     }
     &__image{
         width: 220px;
@@ -387,16 +394,12 @@ input[type="file"] {
     .profile__image{
         margin: auto;
     }
-    .clubs__wrapper{
-        justify-content: center;
-    }
-
-    .trainers__wrapper{
+    .wrapper{
         justify-content: center;
     }
 
     .home{
-        margin: -25px -10px;
+        margin: -27px -10px;
         &__title{
             display: none;
         }

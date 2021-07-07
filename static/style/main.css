@@ -44,14 +44,26 @@ a {
 }
 
 .home {
-  margin: -45px -50px;
+  margin: -80px -50px;
 }
 .home__title {
   position: absolute;
   z-index: 5;
-  left: calc(50% - 138px);
+  left: calc(50% - 124px);
   top: 70px;
   color: #fff;
+}
+.home__club-item {
+  padding: 5px;
+  margin: 10px;
+  width: 300px;
+  height: 360px;
+}
+.home__club-ddress {
+  margin-left: 16px;
+}
+.home__subtitle {
+  padding-top: 20px;
 }
 
 a:hover {
@@ -95,6 +107,13 @@ input[type=file] {
 .error-login {
   margin-top: 30px;
   text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
 }
 
 .footer {
@@ -277,19 +296,12 @@ input[type=file] {
   border: none;
 }
 
-.clubs__wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-content: space-between;
-}
 .clubs__item {
   position: relative;
   padding: 5px;
   margin: 10px;
   width: 300px;
   height: 360px;
-  position: relative;
   background: #fff;
   background-clip: padding-box;
   border: solid 5px transparent;
@@ -317,12 +329,6 @@ input[type=file] {
   word-wrap: break-word;
 }
 
-.trainers__wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-content: space-between;
-}
 .trainers__item {
   border-radius: 1em;
   box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
@@ -330,6 +336,7 @@ input[type=file] {
   width: 270px;
   padding: 10px 25px 35px 25px;
   margin: 10px;
+  background: #fff;
 }
 .trainers__image {
   width: 220px;
@@ -381,16 +388,12 @@ input[type=file] {
     margin: auto;
   }
 
-  .clubs__wrapper {
-    justify-content: center;
-  }
-
-  .trainers__wrapper {
+  .wrapper {
     justify-content: center;
   }
 
   .home {
-    margin: -25px -10px;
+    margin: -27px -10px;
   }
   .home__title {
     display: none;

@@ -79,7 +79,8 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    clubs = Clubs.query.limit(4).all()
+    return render_template('home.html', clubs = clubs)
 
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 
