@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import backref
+from sqlalchemy.sql import func
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
@@ -50,7 +51,7 @@ class Ticket(db.Model):
     date_start = db.Column(db.DateTime, default=datetime.now())
     date_end = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(days= 30))
     club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"), nullable=False)
-    #price = db.Column(db.Integer, nullable=False, default = 1200)
+    price = db.Column(db.Integer, nullable=False, default = 1200)
 
 class Clubs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,13 +65,13 @@ class Trainers(db.Model):
     schedule = db.Column(db.String(60), default = 'Пн - Сб')
     id_club = db.Column(db.Integer, db.ForeignKey("clubs.id"))
     image = db.Column(db.Text, nullable = True)
-    #work_experience = db.Column(db.Text, nullable = False)
+    work_experience = db.Column(db.Integer, nullable = False)
 
-#class Equipment(db.Model):
-#   id = db.Column(db.Integer, primary_key=True)
-#   club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
-#   image = db.Column(db.Text, nullable = True)
-#   name  = db.Column(db.String(90), nullable = True)
+class Equipment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
+    image = db.Column(db.Text, nullable = True)
+    name  = db.Column(db.String(90), nullable = True)
 
 
 
@@ -86,15 +87,20 @@ def home():
     return render_template('home.html', clubs = clubs, count = clubs_count)
 
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
+app.config["IMAGE_CLUBS"] = './static/img/clubs/'
+app.config["IMAGE_TRAINERS"] = './static/img/trainers'
 
 @app.route('/profile', methods=["POST", "GET"])
 def profile():
     base = create_engine('sqlite:///base.db').raw_connection()
     cursor = base.cursor()
-    data = db.session.query(Profiles, Ticket, Users
+    data = db.session.query(Profiles, Users
     ).filter(Profiles.id == current_user.id
-    ).filter(Profiles.ticket_id == Ticket.ticket_id
     ).filter(Profiles.user_id == Users.id).all()
+    ticket = db.session.query(Profiles, Ticket
+    ).filter(Ticket.ticket_id == current_user.id
+    ).filter(Profiles.user_id == current_user.id
+    ).all()
     clubs = Clubs.query.all()
     end = Ticket.query.filter_by(ticket_id = current_user.id).first()
     if (end):
@@ -135,14 +141,13 @@ def profile():
             return redirect(request.url)
 
         if request.form and form_id == 2:
-            profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: current_user.id})
             club = request.form['club-name']
+            profile = Profiles.query.filter_by(id = current_user.id).update({Profiles.ticket_id: current_user.id})
             ticket = Ticket(ticket_id = current_user.id, club_id = club)
             db.session.add(ticket)
             db.session.commit()
             return redirect(request.url)
-
-    return render_template('profile.html', data = data, clubs=clubs)
+    return render_template('profile.html', data = data, clubs=clubs, ticket=ticket)
 
 @app.route('/ticket')
 def ticket():
@@ -152,12 +157,27 @@ def ticket():
     ).filter(Ticket.club_id == Clubs.id).all()
     return render_template('ticket.html', ticket=ticket)
 
-@app.route('/trainers')
+@app.route('/trainers', methods=["POST", "GET"])
 def trainers():
     trainers = db.session.query(Clubs, Trainers
     ).filter(Trainers.id_club == Clubs.id).all()
     count = Trainers.query.count()
-    return render_template('trainers.html', trainers=trainers, count=count)
+    trainer_maxExp = db.session.query(func.max(Trainers.work_experience), Trainers.name)
+    print(trainer_maxExp)
+    sumExp = db.session.query(func.sum(Trainers.work_experience)).all()
+    if request.method == 'POST':
+        name = request.form['name']
+        schedule = request.form['schedule']
+        id_club = request.form['id_club']
+        work_experience = request.form['work_experience']
+        image = request.files['image']
+        image.save(os.path.join(app.config["IMAGE_TRAINERS"], image.filename))
+        trainer = Trainers(name=name, schedule=schedule, 
+        id_club=id_club, image=image.filename, work_experience=work_experience)
+        db.session.add(trainer)
+        db.session.commit()
+
+    return render_template('trainers.html', trainers=trainers, count=count, sumExp=sumExp, max = trainer_maxExp)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
@@ -210,8 +230,18 @@ def registration():
             db.session.rollback()
     return render_template('reg.html', title="Регистрация")
 
-@app.route('/clubs')
+@app.route('/clubs', methods=("POST", "GET"))
 def clubs():
+    if request.method == "POST":
+        name = request.form['name']
+        address = request.form['address']
+        image = request.files['image']
+        image.save(os.path.join(app.config["IMAGE_CLUBS"], image.filename))
+        club = Clubs(name = name, address=address, image=image.filename)
+        db.session.add(club)
+        db.session.commit()
+        return redirect(url_for('clubs'))
+
     clubs = Clubs.query.all()
     clubs_count = Clubs.query.count()
     return render_template('clubs.html', clubs = clubs, count = clubs_count)

@@ -73,7 +73,19 @@
     </header>
     
     <main class="main" id="main" >
-        {% block content %}{% endblock %}  
+
+        {% if request.url_rule|string == '/clubs' or request.url_rule|string == '/trainers' %}
+            <div class="main__add">
+                <button class="main__add-button">Добавить запись</button>
+                <form action="{% block url %}{% endblock %}" method="POST" class="main__add-form" enctype='multipart/form-data'>
+                    {% block form %}
+
+                    {% endblock %}
+                </form>
+            </div>       
+        {% endif %}
+        {% block content %}
+        {% endblock %}  
     </main>     
 
     <footer class="footer">

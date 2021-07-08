@@ -32,10 +32,24 @@ h3 {
   font-size: 1.35em;
 }
 
-main {
+.main {
   padding: 80px 50px;
   min-height: calc(100vh - 220px);
   overflow-x: hidden;
+}
+.main__add-form {
+  display: none;
+}
+.main__add-form--active {
+  display: flex;
+  flex-direction: column;
+}
+.main__submit-input {
+  margin-top: 20px;
+}
+.main__add-button {
+  border: none;
+  outline: none;
 }
 
 a {
@@ -90,7 +104,7 @@ input[type=file] {
 }
 
 .submit-input {
-  width: 205px;
+  width: 200px;
   border: none;
   background: #e7e7e7;
 }
@@ -102,9 +116,17 @@ input[type=file] {
 }
 
 .select {
+  width: 100%;
   outline: none;
   border: none;
   border-bottom: 2px solid #000;
+  overflow: hidden;
+}
+
+option {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .error-login {
@@ -135,6 +157,14 @@ input[type=file] {
 .subtitle {
   text-align: center;
   padding-bottom: 20px;
+}
+
+.upload-label {
+  background: #e7e7e7;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  width: 200px;
 }
 
 .header {
@@ -236,13 +266,6 @@ input[type=file] {
   justify-content: space-between;
   flex-direction: column;
   height: 100px;
-}
-.profile__upload-label {
-  background: #e7e7e7;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
-  width: 200px;
 }
 .profile__image {
   width: 185px;

@@ -4,6 +4,20 @@
     Клубы
 {% endblock %}
 
+
+{% block url %}{{url_for('clubs')}}{% endblock %}
+
+{% block form %}
+    <label><input type='text' class="profile__item" name='name' placeholder="Название"></label>
+    <label><input type="text" class="profile__item" name='address' placeholder="Адрес"></label>
+    <label class="upload-label">
+        <input type="file" name='image'/>
+        <span>Выберете фото</span>
+    </label>
+    <input type="submit" value="Добавить" class='submit-input main__submit-input'>
+    
+{% endblock %}
+
 {% block content %}
     <section class="clubs">
         <h2 class="clubs__title title">Клубы ({{count}})</h2>

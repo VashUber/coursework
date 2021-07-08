@@ -8,17 +8,18 @@
 
 <section class="profile">
     {% for item in data %}
-    <div class='profile__left'>
-        <h2 class="title">Ваш профиль</h2>
-        <div class="profile__data">
-            <img src="{{item[0].image}}" alt="profile image" class="profile__image">
-            <form action="{{ url_for('profile', form_id = 1) }}" method="POST" class="profile__form-data">
-                <label><input type='text' class="profile__item" value="{{item[0].name}}" name='fullname'></label>
-                <label><input type="text" class="profile__item" value="{{item[0].city}}" name='city'></label>
-                <label><input type="email" class="profile__item" value="{{item[2].email}}" name='email'></label>
-                <input type="submit" value="Изменить" class='submit-input' name="edit">
-            </form>
-        </div>
+        <div class='profile__left'>
+            <h2 class="title">Ваш профиль</h2>
+            <div class="profile__data">
+                <img src="{{item[0].image}}" alt="profile image" class="profile__image">
+                <form action="{{ url_for('profile', form_id = 1) }}" method="POST" class="profile__form-data">
+                    <label><input type='text' class="profile__item" value="{{item[0].name}}" name='fullname'></label>
+                    <label><input type="text" class="profile__item" value="{{item[0].city}}" name='city'></label>
+                    <label><input type="email" class="profile__item" value="{{item[1].email}}" name='email'></label>
+                    <input type="submit" value="Изменить" class='submit-input' name="edit">
+                </form>
+            </div>
+    {% endfor %}
         <div class="profile__update-image">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -28,7 +29,7 @@
                 {% endif %}
             {% endwith %}
             <form action="{{ url_for('profile') }}" class="profile__form" method="POST" enctype='multipart/form-data'>
-                <label class="profile__upload-label">
+                <label class="profile__upload-label upload-label">
                     <input type="file" name='image'/>
                     <span>Выберете фото</span>
                 </label>
@@ -42,26 +43,31 @@
     </div> 
     <div class="profile__right">
         <h2 class="title">Абонемент</h2>
-        {% if not item[1].ticket_id == current_user.id %}
+        
+        {% if ticket == [] %}
         <h3>В данный момент у Вас нет абонемента</h3>
         <form action=" {{ url_for('profile', form_id = 2) }} " method="POST" class="profile__form">
             <label for="club">Выберите клуб</label>
                 <select name="club-name" id="club" class="select">
                     {% for option in clubs %}
-                        <option value=" {{ option.id }} "> {{ option.name }} // {{ option.address }}</option>
+                        <option value="{{ option.id }}"> {{ option.name }} // {{ option.address }}</option>
                     {% endfor %}
                 </select>
             <input type="submit" value="Приобрести" name='buy' class="submit-input">
         </form>
         {% else %}
+        {% for ticketItem in ticket %}
         <div class="profile__exist-ticket">
-            <p class="text">Ваш текущий абонемент действителен до: <span class="text--decoration-underline">{{ (item[1].date_end | string)[:10] }}</span></p>
+            <p class="text">Ваш текущий абонемент действителен до: <span class="text--decoration-underline">{{ (ticketItem[1].date_end | string)[:10] }}</span></p>
             <a href="{{url_for('ticket')}}" class="link">Перейти на страницу просмотра абонемента</a>
         </div>
+        {% endfor %}
+        
         {% endif %}
 
+
+
     </div>
-    {% endfor %}
 </section>
 
 {% endblock %}
