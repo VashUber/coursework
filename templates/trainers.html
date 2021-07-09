@@ -7,22 +7,23 @@
 {% block url %}{{url_for('trainers')}}{% endblock %}
 
 {% block form %}
-    <label><input type='text' class="profile__item" name='name' placeholder="Имя"></label>
-    <label><input type="text" class="profile__item" name='schedule' placeholder="Расписание"></label>
-    <label><input type="text" class="profile__item" name='id_club' placeholder="ID клуба"></label>
-    <label><input type="text" class="profile__item" name='work_experience' placeholder="Опыт работы"></label>
+    <label><input type='text' class="add__input-item input-item" name='name' placeholder="Имя" required></label>
+    <label><input type="text" class="add__input-item input-item" name='schedule' placeholder="Расписание" required></label>
+    <label><input type="number" class="add__input-item input-item" name='id_club' placeholder="ID клуба" required></label>
+    <label><input type="text" class="add__input-item input-item" name='work_experience' placeholder="Опыт работы" required></label>
 
-    <label class="upload-label">
-        <input type="file" name='image'/>
+    <label class="upload-label add__upload-label">
+        <input type="file" name='image' required/>
         <span>Выберете фото</span>
     </label>
-    <input type="submit" value="Добавить" class='submit-input main__submit-input'>
+    <input type="submit" value="Добавить" class='submit-input'>
     
 {% endblock %}
 
 {% block content %}
     <section class="trainers">
         <h2 class="trainers__title title">Тренеры ({{count}})</h2>
+        {% if not trainers == [] %}
         <h3 class="trainers__subtitle">Сумраный отыт работы {{sumExp[0][0]}} лет, максимальный у {{max[0][1]}} {{max[0][0]}} лет</h3>
         <div class="trainers__wrapper wrapper">
             {% for trainer in trainers %}
@@ -34,6 +35,8 @@
             </div>
             {% endfor %}
         </div>
+
+        {% endif %}
 
     </section>
 

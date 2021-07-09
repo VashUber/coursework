@@ -36,7 +36,21 @@ h3{
     padding: 80px 50px;
     min-height: calc(100vh - 220px);
     overflow-x: hidden;
-    &__add-form{
+}
+
+.input-item{
+    border: none;
+    outline: none;
+    width: min-content;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+    padding: 10px 0 0 5px;
+    width: 200px;
+    background: unset;
+}
+
+.add{
+    &__form{
         display: none;
         &--active{
             display: flex;
@@ -46,9 +60,12 @@ h3{
     &__submit-input{
         margin-top: 20px;
     }
-    &__add-button{
+    &__button{
         border: none;
         outline: none;
+    }
+    &__upload-label{
+        margin-bottom: 20px;
     }
 }
 
@@ -280,17 +297,6 @@ option{
         border: 2px solid rgba(255, 255, 255, 0.15);
     }
 
-    &__item{
-        border: none;
-        outline: none;
-        width: min-content;
-        border-bottom: 2px solid #000;
-        display: inline-block;
-        padding: 10px 0 0 5px;
-        width: 200px;
-        background: unset;
-    }
-
     &__form-data{
         display: flex;
         flex-direction: column;
@@ -354,6 +360,7 @@ option{
     }
     &__image{
         width: 270px;
+        height: 200px;
         margin: auto;
         border-radius: 5px;
         margin-bottom: 20px;
@@ -377,6 +384,27 @@ option{
         width: 220px;
         margin: auto;
         padding-bottom: 10px;
+    }
+}
+
+.equipment{
+    &__item{
+        border-radius: 1em;
+        box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
+        height: 340px;
+        width: 200px;
+        padding: 20px;
+        margin: 10px;
+        background: #fff;
+    }
+    &__subtitle{
+        text-align: center;
+    }
+
+    &__image{
+        width: 200px;
+        height: 270px;
+
     }
 }
 

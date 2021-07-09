@@ -37,19 +37,36 @@ h3 {
   min-height: calc(100vh - 220px);
   overflow-x: hidden;
 }
-.main__add-form {
+
+.input-item {
+  border: none;
+  outline: none;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  border-bottom: 2px solid #000;
+  display: inline-block;
+  padding: 10px 0 0 5px;
+  width: 200px;
+  background: unset;
+}
+
+.add__form {
   display: none;
 }
-.main__add-form--active {
+.add__form--active {
   display: flex;
   flex-direction: column;
 }
-.main__submit-input {
+.add__submit-input {
   margin-top: 20px;
 }
-.main__add-button {
+.add__button {
   border: none;
   outline: none;
+}
+.add__upload-label {
+  margin-bottom: 20px;
 }
 
 a {
@@ -276,18 +293,6 @@ option {
   margin: 0 30px 20px 0;
   border: 2px solid rgba(255, 255, 255, 0.15);
 }
-.profile__item {
-  border: none;
-  outline: none;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
-  border-bottom: 2px solid #000;
-  display: inline-block;
-  padding: 10px 0 0 5px;
-  width: 200px;
-  background: unset;
-}
 .profile__form-data {
   display: flex;
   flex-direction: column;
@@ -348,6 +353,7 @@ option {
 }
 .clubs__image {
   width: 270px;
+  height: 200px;
   margin: auto;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -369,6 +375,23 @@ option {
   width: 220px;
   margin: auto;
   padding-bottom: 10px;
+}
+
+.equipment__item {
+  border-radius: 1em;
+  box-shadow: 1px 10px 13px 3px rgba(34, 60, 80, 0.2);
+  height: 340px;
+  width: 200px;
+  padding: 20px;
+  margin: 10px;
+  background: #fff;
+}
+.equipment__subtitle {
+  text-align: center;
+}
+.equipment__image {
+  width: 200px;
+  height: 270px;
 }
 
 @media (max-width: 767.99px) {

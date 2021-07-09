@@ -1,4 +1,5 @@
 from enum import unique
+from operator import eq
 import os
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -18,6 +19,10 @@ app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
+app.config["IMAGE_CLUBS"] = './static/img/clubs/'
+app.config["IMAGE_TRAINERS"] = './static/img/trainers'
+app.config["IMAGE_EQUIPMENT"] = './static/img/equipment'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
@@ -73,8 +78,6 @@ class Equipment(db.Model):
     image = db.Column(db.Text, nullable = True)
     name  = db.Column(db.String(90), nullable = True)
 
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(user_id)   
@@ -86,9 +89,6 @@ def home():
     clubs_count = Clubs.query.count()
     return render_template('home.html', clubs = clubs, count = clubs_count)
 
-app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
-app.config["IMAGE_CLUBS"] = './static/img/clubs/'
-app.config["IMAGE_TRAINERS"] = './static/img/trainers'
 
 @app.route('/profile', methods=["POST", "GET"])
 def profile():
@@ -163,7 +163,6 @@ def trainers():
     ).filter(Trainers.id_club == Clubs.id).all()
     count = Trainers.query.count()
     trainer_maxExp = db.session.query(func.max(Trainers.work_experience), Trainers.name)
-    print(trainer_maxExp)
     sumExp = db.session.query(func.sum(Trainers.work_experience)).all()
     if request.method == 'POST':
         name = request.form['name']
@@ -176,8 +175,25 @@ def trainers():
         id_club=id_club, image=image.filename, work_experience=work_experience)
         db.session.add(trainer)
         db.session.commit()
+        return redirect(request.url)
 
     return render_template('trainers.html', trainers=trainers, count=count, sumExp=sumExp, max = trainer_maxExp)
+
+@app.route('/equipment', methods=["POST", "GET"])
+def equipment():
+    equipment = Equipment.query.all()
+    count = Equipment.query.count()
+    if request.method == "POST":
+        name = request.form["name"]
+        club_id = request.form["club_id"]
+        image = request.files["image"]
+        image.save(os.path.join(app.config["IMAGE_EQUIPMENT"], image.filename))
+        equipment = Equipment(name=name, club_id=club_id, image=image.filename)
+        db.session.add(equipment)
+        db.session.commit()
+        return redirect(request.url)
+
+    return render_template('equipment.html', equipment=equipment, count=count)
 
 @app.route('/delete', methods=["POST", "GET"])
 def delete():
@@ -240,7 +256,7 @@ def clubs():
         club = Clubs(name = name, address=address, image=image.filename)
         db.session.add(club)
         db.session.commit()
-        return redirect(url_for('clubs'))
+        return redirect(request.url)
 
     clubs = Clubs.query.all()
     clubs_count = Clubs.query.count()

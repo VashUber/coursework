@@ -13,9 +13,9 @@
             <div class="profile__data">
                 <img src="{{item[0].image}}" alt="profile image" class="profile__image">
                 <form action="{{ url_for('profile', form_id = 1) }}" method="POST" class="profile__form-data">
-                    <label><input type='text' class="profile__item" value="{{item[0].name}}" name='fullname'></label>
-                    <label><input type="text" class="profile__item" value="{{item[0].city}}" name='city'></label>
-                    <label><input type="email" class="profile__item" value="{{item[1].email}}" name='email'></label>
+                    <label><input type='text' class="profile__input-item input-item" value="{{item[0].name}}" name='fullname'></label>
+                    <label><input type="text" class="profile__input-item input-item" value="{{item[0].city}}" name='city'></label>
+                    <label><input type="email" class="profile__input-item input-item" value="{{item[1].email}}" name='email'></label>
                     <input type="submit" value="Изменить" class='submit-input' name="edit">
                 </form>
             </div>

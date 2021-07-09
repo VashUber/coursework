@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block  title %}
+    Оборудование 
+{% endblock %}
+
+{% block url %}{{url_for('equipment')}}{% endblock %}
+
+{% block form %}
+    <label><input type='text' class="add__input-item input-item" name='name' placeholder="Название" required></label>
+    <label><input type="number" class="add__input-item input-item" name='club_id' placeholder="ID клуба" required></label>
+
+    <label class="upload-label add__upload-label">
+        <input type="file" name='image' required/>
+        <span>Выберете фото</span>
+    </label>
+    <input type="submit" value="Добавить" class='submit-input'>
+{% endblock %}
+
+{% block content %}
+    <section class="equipment">
+        <h2 class="title">Оборудование ({{count}}) </h2>
+        {% if not equipment == [] %}
+            {% for item in equipment %}
+                <div class="equipment__wrapper wrapper">
+                    <div class="equipment__item">
+                        <h3 class="equipment__subtitle"> {{item.name}} </h3>
+                        <img src="../static/img/equipment/{{item.image}} " alt=" {{item.name}} " class="equipment__image">
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+        
+    </section>
+{% endblock %}

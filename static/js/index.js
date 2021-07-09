@@ -2,12 +2,12 @@ const burger = document.querySelector(".header__burger-menu");
 const menu = document.querySelector(".navigation");
 const header = document.querySelector(".header");
 const body = document.querySelector("body");
-const btn = document.querySelector(".main__add-button");
-const addForm = document.querySelector(".main__add-form");
+const btn = document.querySelector(".add__button");
+const addForm = document.querySelector(".add__form");
 
 if (btn)
   btn.onclick = () => {
-    addForm.classList.toggle("main__add-form--active");
+    addForm.classList.toggle("add__form--active");
   };
 
 let lastScroll = 0;

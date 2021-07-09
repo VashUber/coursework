@@ -8,20 +8,20 @@
 {% block url %}{{url_for('clubs')}}{% endblock %}
 
 {% block form %}
-    <label><input type='text' class="profile__item" name='name' placeholder="Название"></label>
-    <label><input type="text" class="profile__item" name='address' placeholder="Адрес"></label>
-    <label class="upload-label">
-        <input type="file" name='image'/>
+    <label><input type='text' class="add__input-item input-item" name='name' placeholder="Название" required></label>
+    <label><input type="text" class="add__input-item input-item " name='address' placeholder="Адрес" required></label>
+    <label class="upload-label add__upload-label">
+        <input type="file" name='image' required/>
         <span>Выберете фото</span>
     </label>
-    <input type="submit" value="Добавить" class='submit-input main__submit-input'>
+    <input type="submit" value="Добавить" class='submit-input'>
     
 {% endblock %}
 
 {% block content %}
     <section class="clubs">
         <h2 class="clubs__title title">Клубы ({{count}})</h2>
-
+        {% if not club == [] %}
         <div class="clubs__wrapper wrapper">
             {% for club in clubs %}           
                 <div class="clubs__item">
@@ -31,6 +31,7 @@
                 </div>             
             {% endfor %}
         </div>
+        {% endif %}
 
     </section>
 {% endblock %}
