@@ -12,6 +12,8 @@ from werkzeug.utils import secure_filename
 from sqlalchemy.orm import backref
 from sqlalchemy.sql import func
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 
@@ -26,6 +28,7 @@ app.config["IMAGE_EQUIPMENT"] = './static/img/equipment'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
+
 
 @event.listens_for(Engine, "connect")
 def _set_sqlite_pragma(dbapi_connection, connection_record):
@@ -77,6 +80,14 @@ class Equipment(db.Model):
     club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
     image = db.Column(db.Text, nullable = True)
     name  = db.Column(db.String(90), nullable = True)
+
+admin = Admin(app)
+admin.add_view(ModelView(Users, db.session))
+admin.add_view(ModelView(Profiles, db.session))
+admin.add_view(ModelView(Ticket, db.session))
+admin.add_view(ModelView(Clubs, db.session))
+admin.add_view(ModelView(Trainers, db.session))
+admin.add_view(ModelView(Equipment, db.session))
 
 @login_manager.user_loader
 def load_user(user_id):
