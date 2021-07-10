@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xlniindvxnepyx:da6a100ff14596897ade2912a777e1168eeab35aac731e14da2183f5d87ddf37@ec2-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2a5lcuvkjqm1m'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 app.config["IMAGE_CLUBS"] = './static/img/clubs/'
@@ -30,12 +30,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
 
-@event.listens_for(Engine, "connect")
-def _set_sqlite_pragma(dbapi_connection, connection_record):
-    if isinstance(dbapi_connection, SQLite3Connection):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON;")
-        cursor.close()
+
 
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
