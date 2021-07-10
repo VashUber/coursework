@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://xlniindvxnepyx:da6a100ff14596897ade2912a777e1168eeab35aac731e14da2183f5d87ddf37@ec2-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2a5lcuvkjqm1m'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:aq1sw2de3@localhost/IG'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 app.config["IMAGE_CLUBS"] = './static/img/clubs/'
@@ -99,8 +99,6 @@ def home():
 
 @app.route('/profile', methods=["POST", "GET"])
 def profile():
-    base = create_engine('sqlite:///base.db').raw_connection()
-    cursor = base.cursor()
     data = db.session.query(Profiles, Users
     ).filter(Profiles.id == current_user.id
     ).filter(Profiles.user_id == Users.id).all()
