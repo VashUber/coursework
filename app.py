@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'secret'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:aq1sw2de3@localhost/IG'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 app.config["IMAGE_CLUBS"] = './static/img/clubs/'
@@ -126,13 +126,11 @@ def profile():
             if (not image):
                 flash('Изображение не было прикреплено!')
                 return redirect(request.url)
-
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
             path = './static/img/upload_profile/' + str(image.filename)
-            sql = "UPDATE profiles SET image = ('" + path + "') WHERE id = " + str(current_user.id)
-            cursor.execute(sql)
-            base.commit()
+            col = Profiles.query.filter_by(id = current_user.id).update({Profiles.image: path})
+            db.session.commit()
 
             return redirect(request.url) 
         
@@ -169,7 +167,6 @@ def trainers():
     trainers = db.session.query(Clubs, Trainers
     ).filter(Trainers.id_club == Clubs.id).all()
     count = Trainers.query.count()
-    trainer_maxExp = db.session.query(func.max(Trainers.work_experience), Trainers.name)
     sumExp = db.session.query(func.sum(Trainers.work_experience)).all()
     if request.method == 'POST':
         name = request.form['name']
@@ -184,7 +181,7 @@ def trainers():
         db.session.commit()
         return redirect(request.url)
 
-    return render_template('trainers.html', trainers=trainers, count=count, sumExp=sumExp, max = trainer_maxExp)
+    return render_template('trainers.html', trainers=trainers, count=count, sumExp=sumExp)
 
 @app.route('/equipment', methods=["POST", "GET"])
 def equipment():

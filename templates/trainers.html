@@ -24,7 +24,7 @@
     <section class="trainers">
         <h2 class="trainers__title title">Тренеры ({{count}})</h2>
         {% if not trainers == [] %}
-        <h3 class="trainers__subtitle">Сумраный отыт работы {{sumExp[0][0]}} лет, максимальный у {{max[0][1]}} {{max[0][0]}} лет</h3>
+        <h3 class="trainers__subtitle">Сумраный отыт работы {{sumExp[0][0]}} лет</h3>
         <div class="trainers__wrapper wrapper">
             {% for trainer in trainers %}
             <div class="trainers__item">
