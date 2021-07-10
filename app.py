@@ -14,12 +14,14 @@ from sqlalchemy.sql import func
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+import os
+
 
 app = Flask(__name__)
 
 app.secret_key= '1482gfgfd121df fd;;;1221*32fdvd fuheioABOBA'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xlniindvxnepyx:da6a100ff14596897ade2912a777e1168eeab35aac731e14da2183f5d87ddf37@ec2-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2a5lcuvkjqm1m'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://xlniindvxnepyx:da6a100ff14596897ade2912a777e1168eeab35aac731e14da2183f5d87ddf37@ec2-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2a5lcuvkjqm1m'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["IMAGE_UPLOADS"] = './static/img/upload_profile/'
 app.config["IMAGE_CLUBS"] = './static/img/clubs/'
@@ -269,5 +271,4 @@ def clubs():
     return render_template('clubs.html', clubs = clubs, count = clubs_count)
 
 if __name__ == '__main__':
-    db.create_all()
     app.run(debug=True)
