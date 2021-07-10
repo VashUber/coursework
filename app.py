@@ -74,8 +74,8 @@ class Trainers(db.Model):
 class Equipment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     club_id = db.Column(db.Integer, db.ForeignKey("clubs.id"))
-    image = db.Column(db.Text, nullable = True)
-    name  = db.Column(db.String(90), nullable = True)
+    image = db.Column(db.Text, nullable = False)
+    name  = db.Column(db.String(90), nullable = False)
 
 admin = Admin(app)
 admin.add_view(ModelView(Users, db.session))
@@ -193,6 +193,7 @@ def equipment():
         image = request.files["image"]
         image.save(os.path.join(app.config["IMAGE_EQUIPMENT"], image.filename))
         equipment = Equipment(name=name, club_id=club_id, image=image.filename)
+
         db.session.add(equipment)
         db.session.commit()
         return redirect(request.url)

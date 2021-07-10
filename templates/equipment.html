@@ -21,14 +21,14 @@
     <section class="equipment">
         <h2 class="title">Оборудование ({{count}}) </h2>
         {% if not equipment == [] %}
-            {% for item in equipment %}
                 <div class="equipment__wrapper wrapper">
+                    {% for item in equipment %}
                     <div class="equipment__item">
                         <h3 class="equipment__subtitle"> {{item.name}} </h3>
                         <img src="../static/img/equipment/{{item.image}} " alt=" {{item.name}} " class="equipment__image">
                     </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
 
         {% endif %}
         
