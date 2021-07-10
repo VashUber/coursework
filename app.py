@@ -269,4 +269,5 @@ def clubs():
     return render_template('clubs.html', clubs = clubs, count = clubs_count)
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True)
